@@ -3,7 +3,9 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import { StyleSheet, TextInput, Button, View } from 'react-native';
 import { Input } from "react-native-elements";
 
-function LoginScreen() {
+import colors from "../config/colors";
+
+function LoginScreen({navigation}) {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
@@ -13,7 +15,6 @@ function LoginScreen() {
                 <Input
                     placeholder="Email"
                     onChangeText={text => setEmail(text)}
-                    //icon="email"
                     keyboardType="email-address"
                     leftIcon={<FontAwesome5 name="envelope"/>}
                     //value={e-mail}
@@ -27,7 +28,7 @@ function LoginScreen() {
                 />
                 <Button
                     title="Login"
-                    onPress={ () => {
+                    onPress={() => {
                         // TODO: Delete log statement after debugging.
                         console.log(email + " " + password);
                     }}
@@ -35,8 +36,9 @@ function LoginScreen() {
                 />
                 <Button
                     title="Register"
-                    onPress={ () => {
+                    onPress={() => {
                         console.log("goto Register...");
+                        navigation.navigate("RegisterScreen");
                     }}
                     color="#393E46"
                 />
