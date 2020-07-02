@@ -1,7 +1,8 @@
 import React from "react";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { SafeAreaView, StyleSheet, Button } from "react-native";
-import { Input } from "react-native-elements";
+import { Input, Text } from "react-native-elements";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
@@ -15,76 +16,88 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required().min(4).label("Password"),
 });
 
-function RegisterScreen() {
+function RegisterScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <SafeAreaView style={styles.form}>
-        <Formik
-          initialValues={{
-            firstname: "",
-            lastname: "",
-            username: "",
-            email: "",
-            password: "",
-          }}
-          onSubmit={(values) => console.log(values)}
-          validationSchema={validationSchema}
-        >
-          {({ handleChange, handleSubmit, errors, handleBlur, touched }) => (
-            <>
-              <Input
-                autoCapitalize="words"
-                placeholder="First name"
-                onBlur={handleBlur("firstname")}
-                onChangeText={handleChange("firstname")}
-                textContentType="name"
-                leftIcon={<FontAwesome5 name="user" />}
-                errorMessage={touched.firstname && errors.firstname}
-              />
-              <Input
-                autoCapitalize="words"
-                placeholder="Last name"
-                onBlur={handleBlur("lastname")}
-                onChangeText={handleChange("lastname")}
-                textContentType="familyName"
-                leftIcon={<FontAwesome5 name="user" />}
-                errorMessage={touched.lastname && errors.lastname}
-              />
-              <Input
-                autoCapitalize="none"
-                autoCorrect={false}
-                onBlur={handleBlur("username")}
-                textContentType="username"
-                placeholder="Username"
-                onChangeText={handleChange("username")}
-                leftIcon={<FontAwesome5 name="user-circle" />}
-                errorMessage={touched.username && errors.username}
-              />
-              <Input
-                autoCapitalize="none"
-                autoCorrect={false}
-                onBlur={handleBlur("email")}
-                placeholder="Email"
-                textContentType="emailAddress"
-                onChangeText={handleChange("email")}
-                leftIcon={<FontAwesome5 name="envelope" />}
-                errorMessage={touched.email && errors.email}
-              />
-              <Input
-                autoCapitalize="none"
-                autoCorrect={false}
-                onBlur={handleBlur("password")}
-                placeholder="Password"
-                onChangeText={handleChange("password")}
-                textContentType="password"
-                secureTextEntry
-                leftIcon={<FontAwesome5 name="lock" />}
-                errorMessage={touched.password && errors.password}
-              />
-              <Button title="Register" onPress={handleSubmit} color="#32e0c4" />
-            </>
-          )}
-        </Formik>
+        <KeyboardAwareScrollView>
+          <Formik
+            initialValues={{
+              firstname: "",
+              lastname: "",
+              username: "",
+              email: "",
+              password: "",
+            }}
+            onSubmit={(values) => console.log(values)}
+            validationSchema={validationSchema}
+          >
+            {({ handleChange, handleSubmit, errors, handleBlur, touched }) => (
+              <>
+                <Input
+                  autoCapitalize="words"
+                  placeholder="First name"
+                  onBlur={handleBlur("firstname")}
+                  onChangeText={handleChange("firstname")}
+                  textContentType="name"
+                  leftIcon={<FontAwesome5 name="user" />}
+                  errorMessage={touched.firstname && errors.firstname}
+                />
+                <Input
+                  autoCapitalize="words"
+                  placeholder="Last name"
+                  onBlur={handleBlur("lastname")}
+                  onChangeText={handleChange("lastname")}
+                  textContentType="familyName"
+                  leftIcon={<FontAwesome5 name="user" />}
+                  errorMessage={touched.lastname && errors.lastname}
+                />
+                <Input
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  onBlur={handleBlur("username")}
+                  textContentType="username"
+                  placeholder="Username"
+                  onChangeText={handleChange("username")}
+                  leftIcon={<FontAwesome5 name="user-circle" />}
+                  errorMessage={touched.username && errors.username}
+                />
+                <Input
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  onBlur={handleBlur("email")}
+                  placeholder="Email"
+                  textContentType="emailAddress"
+                  onChangeText={handleChange("email")}
+                  leftIcon={<FontAwesome5 name="envelope" />}
+                  errorMessage={touched.email && errors.email}
+                />
+                <Input
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  onBlur={handleBlur("password")}
+                  placeholder="Password"
+                  onChangeText={handleChange("password")}
+                  textContentType="password"
+                  secureTextEntry
+                  leftIcon={<FontAwesome5 name="lock" />}
+                  errorMessage={touched.password && errors.password}
+                />
+                <Button
+                  title="Register"
+                  onPress={handleSubmit}
+                  color="#32e0c4"
+                />
+                <Text
+                  style={styles.textStyle}
+                  onPress={() => navigation.navigate("LoginScreen")}
+                >
+                  Already have account? Click here to login
+                </Text>
+              </>
+            )}
+          </Formik>
+        </KeyboardAwareScrollView>
       </SafeAreaView>
     </SafeAreaView>
   );
@@ -101,6 +114,11 @@ const styles = StyleSheet.create({
   form: {
     width: "100%",
     paddingHorizontal: 20,
+  },
+  textStyle: {
+    marginTop: 15,
+    color: colors.grey,
+    textAlign: "center",
   },
 });
 export default RegisterScreen;
