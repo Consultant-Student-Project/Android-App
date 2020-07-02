@@ -92,7 +92,8 @@ function RegisterScreen({ navigation }) {
                   style={styles.textStyle}
                   onPress={() => navigation.navigate("LoginScreen")}
                 >
-                  Already have account? Click here to login
+                  Already have account?
+                  <Text style={styles.boldText}> Click here to login.</Text>
                 </Text>
               </>
             )}
@@ -119,6 +120,9 @@ const styles = StyleSheet.create({
     marginTop: 15,
     color: colors.grey,
     textAlign: "center",
+  },
+  boldText: {
+    fontWeight: "bold",
   },
 });
 export default RegisterScreen;
