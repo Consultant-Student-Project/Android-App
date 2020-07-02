@@ -9,8 +9,8 @@ import * as Yup from "yup";
 import colors from "../config/colors";
 
 const validationSchema = Yup.object().shape({
-  firstname: Yup.string().required().min(3).trim().label("First name"),
-  lastname: Yup.string().required().min(3).trim().label("Last name"),
+  firstname: Yup.string().required().min(2).trim().label("First name"),
+  lastname: Yup.string().required().min(2).trim().label("Last name"),
   username: Yup.string().required().min(3).trim().label("Username"),
   email: Yup.string().required().email().trim().label("Email"),
   password: Yup.string().required().min(4).label("Password"),
