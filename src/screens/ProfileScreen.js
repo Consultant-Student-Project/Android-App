@@ -1,32 +1,37 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button } from "react-native";
-import { ProfilePicture } from "../components/ProfilePicture.js";
+import { View, StyleSheet, Button } from "react-native";
+import { Text } from "react-native-elements";
+import ProfilePicture from "../components/ProfilePicture";
+import MainView from '../components/MainView.js';
 
 function ProfileScreen() {
-    const name = useState();
+    const name = "Ege Yıldır";
     const username = useState();
-    const university = useState();
+    const university = "Akdeniz";
     const faculty = useState();
 
     return (
+        
         <View>
-            <ProfilePicture></ProfilePicture>
+            <ProfilePicture picture="https://picsum.photos/200/200"/>
             <Text>{name}</Text>
             <Text>{username}</Text>
             <Text>{university}</Text>
             <Text>{faculty}</Text>
             <Button 
-              title="Settings"
-              onPress={() => {
-                  console.log("Forwarded to settings page.");
-              }}
-              />
+                title="Settings"
+                onPress={() => {
+                    console.log("Forwarded to settings page.");
+                }}
+            />
             <Button
-              title="Become A Consultant!"
-              onPress={() => {
-                  console.log("Forwarded to become consultant form.");
-              }}
-              />
+                title="Become A Consultant!"
+                onPress={() => {
+                    console.log("Forwarded to become consultant form.");
+                }}
+            />
+            <MainView>
+            </MainView>   
         </View>
     )
 }
