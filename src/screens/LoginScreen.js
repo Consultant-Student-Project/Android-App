@@ -3,7 +3,15 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { StyleSheet, TextInput, Button, View } from "react-native";
 import { Input } from "react-native-elements";
 
+import { Formik } from "formik";
+import * as Yup from "yup";
+
 import colors from "../config/colors";
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().min(2).trim().label("Email"),
+  password: Yup.string().required().min(4).label("Password"),
+});
 
 function LoginScreen({ navigation }) {
   const [email, setEmail] = useState();
@@ -12,36 +20,54 @@ function LoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.form}>
-        <Input
-          placeholder="Email"
-          onChangeText={(text) => setEmail(text)}
-          keyboardType="email-address"
-          leftIcon={<FontAwesome5 name="envelope" />}
-          //value={e-mail}
-        />
-        <Input
-          placeholder="Password"
-          onChangeText={(text) => setPassword(text)}
-          secureTextEntry
-          leftIcon={<FontAwesome5 name="lock" />}
-          //value={password}
-        />
-        <Button
-          title="Login"
-          onPress={() => {
-            // TODO: Delete log statement after debugging.
-            console.log(email + " " + password);
+        <Formik
+          initialValues={{
+            email: "",
+            password: "",
           }}
-          color="#32E0C4"
-        />
-        <Button
-          title="Register"
-          onPress={() => {
-            console.log("goto Register...");
-            navigation.navigate("RegisterScreen");
-          }}
-          color="#393E46"
-        />
+          onSubmit={() => console.log("helo")}
+          validationSchema={validationSchema}
+        >
+          {({ handleChange, handleSubmit, errors, handleBlur, touched }) => (
+            <>
+              <Input
+                placeholder="Email"
+                autoCapitalize="none"
+                autoCorrect={false}
+                onBlur={handleBlur("email")}
+                onChangeText={(text) => setEmail(text)}
+                textContentType="emailAddress"
+                onChangeText={handleChange("email")}
+                leftIcon={<FontAwesome5 name="envelope" />}
+                errorMessage={touched.email && errors.email}
+              />
+              <Input
+                placeholder="Password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                onBlur={handleBlur("password")}
+                onChangeText={(text) => setPassword(text)}
+                textContentType="password"
+                secureTextEntry
+                leftIcon={<FontAwesome5 name="lock" />}
+                errorMessage={touched.password && errors.password}
+              />
+              <Button
+                title="Login"
+                onPress={handleSubmit}
+                color={colors.neon}
+              />
+            </>
+          )}
+        </Formik>
+        <View style={styles.button}>
+          <Button
+            title="Register"
+            onPress={() => navigation.navigate("RegisterScreen")}
+            color={colors.grey}
+          />
+        </View>
+        
       </View>
     </View>
   );
@@ -59,5 +85,8 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 20,
   },
+  button: {
+    marginTop: 10,
+  }
 });
 export default LoginScreen;
