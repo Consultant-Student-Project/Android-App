@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Button } from "react-native";
 import { Text } from "react-native-elements";
 import ProfilePicture from "../components/ProfilePicture";
-import MainView from '../components/MainView.js';
 
 function ProfileScreen() {
     const name = "Ege Yıldır";
@@ -30,8 +29,6 @@ function ProfileScreen() {
                     console.log("Forwarded to become consultant form.");
                 }}
             />
-            <MainView>
-            </MainView>   
         </View>
     )
 }
