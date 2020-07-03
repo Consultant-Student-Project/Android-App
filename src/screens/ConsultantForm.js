@@ -12,11 +12,6 @@ const validationSchema = Yup.object().shape({
 export default function ConsultantForm() {
     return (
         <View>
-            // TODO: Make photo required
-            /*Name Surname Faculty Department Image(ogr belgesi) 
-                You should take Name and Surname directly
-                and send them to db.
-            */
             <Formik 
                 initialValues={{
                     faculty: "",
