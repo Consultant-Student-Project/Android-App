@@ -6,6 +6,8 @@ import SearchScreen from "../screens/SearchScreen";
 import MessagesScreen from "../screens/MessagesScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 
+import ProfileNavigator from "./ProfileNavigator";
+
 import colors from "../config/colors";
 
 const Tab = createBottomTabNavigator();
@@ -35,7 +37,7 @@ const AppNavigator = () => (
         />
         <Tab.Screen 
             name="ProfileScreen" 
-            component={ProfileScreen} 
+            component={ProfileNavigator} 
             options={{ tabBarIcon: ({ size, color }) => <FontAwesome5 name="user" size={size} color={color} />,
                 title: "Profile"
             }}
