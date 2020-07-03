@@ -1,15 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { StyleSheet, Button, View } from "react-native";
 import { Input } from "react-native-elements";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import jwtDecode from "jwt-decode";
 
 import colors from "../config/colors";
 import authApi from "../api/auth";
 import ErrorMessage from "../components/ErrorMessage";
-import AuthContext from "../auth/context";
+import useAuth from "../auth/useAuth";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(3).trim().label("Username"),
@@ -17,16 +16,14 @@ const validationSchema = Yup.object().shape({
 });
 
 function LoginScreen({ navigation }) {
-  const authContext = useContext(AuthContext);
+  const { logIn } = useAuth();
   const [loginFailed, setLoginFailed] = useState(false);
 
   const handleSubmit = async ({ username, password }) => {
     const result = await authApi.login(username, password);
     if (!result.ok) return setLoginFailed(true);
     setLoginFailed(false);
-
-    const user = jwtDecode(result.data);
-    authContext.setUser(user);
+    logIn(result.data);
   };
   return (
     <View style={styles.container}>
