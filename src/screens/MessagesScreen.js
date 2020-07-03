@@ -2,8 +2,6 @@ import React from "react";
 import { FlatList } from "react-native";
 import { ListItem } from "react-native-elements";
 
-import Screen from "../components/Screen";
-
 const messages = [
   {
     id: 1,
@@ -22,24 +20,23 @@ const messages = [
 
 function MessagesScreen({ navigation }) {
   return (
-    <Screen>
-      <FlatList
-        data={messages}
-        keyExtractor={(message) => message.id.toString()}
-        renderItem={({ item }) => (
-          <ListItem
-            title={item.name}
-            subtitle={item.description}
-            leftAvatar={{
-              source: item.image && { uri: item.image },
-              title: item.name[0],
-            }}
-            bottomDivider
-            chevron
-          />
-        )}
-      />
-    </Screen>
+    <FlatList
+      data={messages}
+      keyExtractor={(message) => message.id.toString()}
+      renderItem={({ item }) => (
+        <ListItem
+          title={item.name}
+          subtitle={item.description}
+          leftAvatar={{
+            source: item.image && { uri: item.image },
+            title: item.name[0],
+          }}
+          bottomDivider
+          chevron
+          onPress={() => navigation.navigate("ChatScreen", item)}
+        />
+      )}
+    />
   );
 }
 
