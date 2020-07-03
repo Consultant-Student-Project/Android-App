@@ -17,17 +17,17 @@ export default class SearchScreen extends Component {
     const users = [
       {
         id: 1,
-        title: "T1",
-        description: "D1",
+        name: "Alessia Howard",
+        description: "Faculty of Law",
         image:
-          "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg",
+          "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg",
       },
       {
         id: 2,
-        title: "T2",
-        description: "D2",
+        name: "Loki Krause",
+        description: "Faculty of Engineering",
         image:
-          "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg",
+          "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg",
       },
     ];
     const { search } = this.state;
@@ -47,11 +47,11 @@ export default class SearchScreen extends Component {
           keyExtractor={(message) => message.id.toString()}
           renderItem={({ item }) => (
             <ListItem
-              title={item.title}
-              subtitle={item.subtitle}
+              title={item.name}
+              subtitle={item.description}
               leftAvatar={{
                 source: item.image && { uri: item.image },
-                title: item.title[0],
+                title: item.name[0],
               }}
               bottomDivider
               chevron

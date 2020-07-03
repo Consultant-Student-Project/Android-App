@@ -2,23 +2,25 @@ import React from "react";
 import { FlatList } from "react-native";
 import { ListItem } from "react-native-elements";
 
+import Screen from "../components/Screen";
+
 const messages = [
   {
     id: 1,
-    title: "T1",
-    description: "D1",
-    image:
-      "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg",
+    name: "Alessia Howard",
+    description: "Faculty of Law",
+    image: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg",
   },
   {
     id: 2,
-    title: "T2",
-    description: "D2",
-    image: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg",
+    name: "Loki Krause",
+    description: "Faculty of Engineering",
+    image:
+      "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg",
   },
 ];
 
-function MessagesScreen() {
+function MessagesScreen({ navigation }) {
   return (
     <Screen>
       <FlatList
@@ -26,11 +28,11 @@ function MessagesScreen() {
         keyExtractor={(message) => message.id.toString()}
         renderItem={({ item }) => (
           <ListItem
-            title={item.title}
-            subtitle={item.subtitle}
+            title={item.name}
+            subtitle={item.description}
             leftAvatar={{
               source: item.image && { uri: item.image },
-              title: item.title[0],
+              title: item.name[0],
             }}
             bottomDivider
             chevron
