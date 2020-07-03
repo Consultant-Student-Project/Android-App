@@ -1,52 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import { StyleSheet, TextInput, Button, View } from "react-native";
+import { StyleSheet, Button, View } from "react-native";
 import { Input } from "react-native-elements";
-
 import { Formik } from "formik";
 import * as Yup from "yup";
+import jwtDecode from "jwt-decode";
 
 import colors from "../config/colors";
+import authApi from "../api/auth";
+import ErrorMessage from "../components/ErrorMessage";
+import AuthContext from "../auth/context";
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().required().min(2).trim().label("Email"),
+  username: Yup.string().required().min(3).trim().label("Username"),
   password: Yup.string().required().min(4).label("Password"),
 });
 
 function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const authContext = useContext(AuthContext);
+  const [loginFailed, setLoginFailed] = useState(false);
 
+  const handleSubmit = async ({ username, password }) => {
+    const result = await authApi.login(username, password);
+    if (!result.ok) return setLoginFailed(true);
+    setLoginFailed(false);
+
+    const user = jwtDecode(result.data);
+    authContext.setUser(user);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.form}>
+        <ErrorMessage
+          error="Invalid username and/or password."
+          visible={loginFailed}
+        />
         <Formik
           initialValues={{
-            email: "",
+            username: "",
             password: "",
           }}
-          onSubmit={() => console.log("helo")}
+          onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
           {({ handleChange, handleSubmit, errors, handleBlur, touched }) => (
             <>
               <Input
-                placeholder="Email"
+                placeholder="Username"
                 autoCapitalize="none"
                 autoCorrect={false}
-                onBlur={handleBlur("email")}
-                onChangeText={(text) => setEmail(text)}
-                textContentType="emailAddress"
-                onChangeText={handleChange("email")}
-                leftIcon={<FontAwesome5 name="envelope" />}
-                errorMessage={touched.email && errors.email}
+                onBlur={handleBlur("username")}
+                textContentType="username"
+                onChangeText={handleChange("username")}
+                leftIcon={<FontAwesome5 name="user" />}
+                errorMessage={touched.username && errors.username}
               />
               <Input
                 placeholder="Password"
                 autoCapitalize="none"
                 autoCorrect={false}
                 onBlur={handleBlur("password")}
-                onChangeText={(text) => setPassword(text)}
+                onChangeText={handleChange("password")}
                 textContentType="password"
                 secureTextEntry
                 leftIcon={<FontAwesome5 name="lock" />}
@@ -67,7 +81,6 @@ function LoginScreen({ navigation }) {
             color={colors.grey}
           />
         </View>
-        
       </View>
     </View>
   );
@@ -87,6 +100,6 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 10,
-  }
+  },
 });
 export default LoginScreen;

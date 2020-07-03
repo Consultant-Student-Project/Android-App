@@ -1,6 +1,6 @@
 import React from "react";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import { SafeAreaView, StyleSheet, Button } from "react-native";
+import { StyleSheet, Button, View } from "react-native";
 import { Input, Text } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import * as axios from "axios";
 
 import colors from "../config/colors";
+import Screen from "../components/Screen";
 
 const validationSchema = Yup.object().shape({
   firstname: Yup.string().required().min(2).trim().label("First name"),
@@ -19,8 +20,8 @@ const validationSchema = Yup.object().shape({
 
 function RegisterScreen({ navigation }) {
   return (
-    <SafeAreaView style={styles.container}>
-      <SafeAreaView style={styles.form}>
+    <Screen style={styles.container}>
+      <View style={styles.form}>
         <KeyboardAwareScrollView>
           <Formik
             initialValues={{
@@ -92,7 +93,7 @@ function RegisterScreen({ navigation }) {
                 <Button
                   title="Register"
                   onPress={handleSubmit}
-                  color="#32e0c4"
+                  color={colors.neon}
                 />
                 <Text
                   style={styles.textStyle}
@@ -105,8 +106,8 @@ function RegisterScreen({ navigation }) {
             )}
           </Formik>
         </KeyboardAwareScrollView>
-      </SafeAreaView>
-    </SafeAreaView>
+      </View>
+    </Screen>
   );
 }
 
