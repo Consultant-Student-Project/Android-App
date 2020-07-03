@@ -5,6 +5,7 @@ import { Input, Text } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import * as axios from "axios";
 
 import colors from "../config/colors";
 
@@ -29,7 +30,12 @@ function RegisterScreen({ navigation }) {
               email: "",
               password: "",
             }}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values) => {
+              axios.default
+                .post("http://localhost:3000/signup", values)
+                .then((data) => console.log(data))
+                .catch((err) => console.error(err));
+            }}
             validationSchema={validationSchema}
           >
             {({ handleChange, handleSubmit, errors, handleBlur, touched }) => (
