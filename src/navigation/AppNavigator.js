@@ -1,11 +1,9 @@
 import React from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
- 
-import SearchScreen from "../screens/SearchScreen";
-import MessagesScreen from "../screens/MessagesScreen";
-import ProfileScreen from "../screens/ProfileScreen";
 
+import SearchNavigator from "../navigation/SearchNavigator";
+import MessageNavigator from "../navigation/MessageNavigator"
 import ProfileNavigator from "./ProfileNavigator";
 
 import colors from "../config/colors";
@@ -23,14 +21,14 @@ const AppNavigator = () => (
     >
         <Tab.Screen 
             name="SearchScreen" 
-            component={SearchScreen} 
+            component={SearchNavigator} 
             options={{ tabBarIcon: ({ size, color }) => <FontAwesome5 name="search" size={size} color={color} />,
                 title: "Search"
             }}
         />
         <Tab.Screen 
             name="MessagesScreen" 
-            component={MessagesScreen} 
+            component={MessageNavigator} 
             options={{ tabBarIcon: ({ size, color }) => <FontAwesome5 name="envelope" size={size} color={color} />,
                 title: "Messages"
             }}
