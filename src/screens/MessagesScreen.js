@@ -20,22 +20,24 @@ const messages = [
 
 function MessagesScreen() {
   return (
-    <FlatList
-      data={messages}
-      keyExtractor={(message) => message.id.toString()}
-      renderItem={({ item }) => (
-        <ListItem
-          title={item.title}
-          subtitle={item.subtitle}
-          leftAvatar={{
-            source: item.image && { uri: item.image },
-            title: item.title[0],
-          }}
-          bottomDivider
-          chevron
-        />
-      )}
-    />
+    <Screen>
+      <FlatList
+        data={messages}
+        keyExtractor={(message) => message.id.toString()}
+        renderItem={({ item }) => (
+          <ListItem
+            title={item.title}
+            subtitle={item.subtitle}
+            leftAvatar={{
+              source: item.image && { uri: item.image },
+              title: item.title[0],
+            }}
+            bottomDivider
+            chevron
+          />
+        )}
+      />
+    </Screen>
   );
 }
 
