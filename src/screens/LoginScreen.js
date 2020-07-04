@@ -16,14 +16,14 @@ const validationSchema = Yup.object().shape({
 });
 
 function LoginScreen({ navigation }) {
-  const { logIn } = useAuth();
+  const auth = useAuth();
   const [loginFailed, setLoginFailed] = useState(false);
 
   const handleSubmit = async ({ username, password }) => {
     const result = await authApi.login(username, password);
     if (!result.ok) return setLoginFailed(true);
     setLoginFailed(false);
-    logIn(result.data);
+    auth.logIn(result.data);
   };
   return (
     <View style={styles.container}>

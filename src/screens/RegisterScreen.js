@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { StyleSheet, Button, View } from "react-native";
 import { Input, Text } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import * as axios from "axios";
 
 import colors from "../config/colors";
+import ErrorMessage from "../components/ErrorMessage";
 import Screen from "../components/Screen";
+import usersApi from "../api/register";
+import useApi from "../hooks/useApi";
 
 const validationSchema = Yup.object().shape({
   firstname: Yup.string().required().min(2).trim().label("First name"),
@@ -19,6 +21,24 @@ const validationSchema = Yup.object().shape({
 });
 
 function RegisterScreen({ navigation }) {
+  const registerApi = useApi(usersApi.register);
+  const [error, setError] = useState();
+
+  const handleSubmit = async (userInfo) => {
+    const result = await registerApi.request(userInfo);
+
+    if (!result.ok) {
+      if (result.data) {
+        setError(result.data.error);
+      } else {
+        setError("An unexpected error occurred.");
+        console.log(result);
+      }
+      return;
+    }
+    navigation.navigate("LoginScreen");
+  };
+
   return (
     <Screen style={styles.container}>
       <View style={styles.form}>
@@ -31,12 +51,7 @@ function RegisterScreen({ navigation }) {
               email: "",
               password: "",
             }}
-            onSubmit={(values) => {
-              axios.default
-                .post("http://localhost:3000/signup", values)
-                .then((data) => console.log(data))
-                .catch((err) => console.error(err));
-            }}
+            onSubmit={handleSubmit}
             validationSchema={validationSchema}
           >
             {({ handleChange, handleSubmit, errors, handleBlur, touched }) => (
@@ -102,6 +117,7 @@ function RegisterScreen({ navigation }) {
                   Already have account?
                   <Text style={styles.boldText}> Click here to login.</Text>
                 </Text>
+                <ErrorMessage error={error} visible={error} />
               </>
             )}
           </Formik>
